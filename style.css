@@ -35,9 +35,14 @@
             --highlight-text: #ffffff;
             --shadow-md: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05);
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --header-bg: rgba(15, 23, 42, 0.85);
-            --tab-bg: rgba(30, 41, 59, 0.6);
+            --header-bg: #00FF6E;
+            --tab-bg: #00FF6E;
             --header-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        [data-theme="dark"] * {
+            color: blue !important;
+            text-shadow: 2px 2px 4px black !important;
         }
 
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
@@ -79,10 +84,11 @@
         /* Tabs */
         .tabs { 
             display: flex; gap: 10px; margin-bottom: 2rem; 
-            background: rgba(255,255,255,0.4); padding: 8px; 
+            background: var(--tab-bg); padding: 8px; 
             border-radius: 16px; overflow-x: auto; 
             box-shadow: var(--shadow-sm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             scrollbar-width: none; border: 1px solid rgba(255,255,255,0.4);
+            transition: background 0.3s;
         }
         .tabs::-webkit-scrollbar { display: none; }
         .tab-btn {
@@ -251,6 +257,8 @@
             .theme-btn { width: 40px; height: 40px; font-size: 1.1rem; }
             
             .result-grid { grid-template-columns: 1fr; gap: 12px; }
+            .cost-input-wrap { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .cost-input-wrap input { max-width: 100% !important; }
             .scanner-modal { padding: 12px; }
             .scanner-container { border-radius: 16px; }
             .res-value { font-size: 2.2rem; }
@@ -264,7 +272,7 @@
                 left: 0;
                 width: 100%;
                 z-index: 1000;
-                background: rgba(255, 255, 255, 0.95);
+                background: var(--header-bg);
                 backdrop-filter: blur(15px);
                 -webkit-backdrop-filter: blur(15px);
                 border-radius: 20px 20px 0 0;

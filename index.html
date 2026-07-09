@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IC Database &amp; Utility Calculator System</title>
+    
+    
+    
+    
+<link rel="stylesheet" href="style.css" /></head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="title-area">
+                    <h1>⚡ IC Database &amp; Utility</h1>
+                    <p>Lookup data, decode components, or calculate electricity usage</p>
+                </div>
+                <button id="themeToggle" class="theme-btn" aria-label="Toggle Theme">
+                    <span class="icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="lookup">
+                <span class="icon">📁</span><span class="d-text">Database Lookup</span><span class="m-text">Database</span>
+            </button>
+            <button class="tab-btn" data-tab="resistance">
+                <span class="icon">🎨</span><span class="d-text">Resistance Tracker</span><span class="m-text">Resistance</span>
+            </button>
+            <button class="tab-btn" data-tab="smd">
+                <span class="icon">📏</span><span class="d-text">SMD Resistor Basic</span><span class="m-text">SMD</span>
+            </button>
+            <button class="tab-btn" data-tab="capacitor">
+                <span class="icon">💧</span><span class="d-text">Capacitor Basic</span><span class="m-text">Capacitor</span>
+            </button>
+            <button class="tab-btn" data-tab="electricity">
+                <span class="icon">🔌</span><span class="d-text">Electricity Calc</span><span class="m-text">Elec. Calc</span>
+            </button>
+        </nav>
+
+        <main>
+            <!-- DATABASE TAB -->
+            <section id="lookup" class="tab-content active">
+                <div class="card">
+                    <h2>📁 Upload Excel File</h2>
+                    <input type="file" id="fileInput" accept=".xls,.xlsx" />
+                    <p id="fileName" class="file-name">No file selected</p>
+                    <div id="loader" class="loader"><div class="spinner"></div> Processing file...</div>
+                    <p id="uploadMsg" class="msg"></p>
+                </div>
+                <div class="card">
+                    <h2>🔍 Search IC Number</h2>
+                    <div class="search-box">
+                        <input type="text" id="icInput" placeholder="Enter IC Number (e.g., 9001234-56-7890)" />
+                        <button id="searchBtn">Search</button>
+                        <button class="scan-btn" onclick="openScanner('ic')">📷 Scan IC</button>
+                    </div>
+                    <div class="controls">
+                        <button id="clearBtn" class="secondary">Clear</button>
+                        <button id="downloadBtn" class="secondary" disabled="">Download CSV</button>
+                    </div>
+                    <p id="searchMsg" class="msg"></p>
+                    <div id="icOcrStatus" class="ocr-status"></div>
+                </div>
+                <div class="card">
+                    <h2>📊 Results</h2>
+                    <div class="table-wrapper" id="tableContainer">
+                        <p class="no-data">Upload an Excel file and enter an IC number to view results.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESISTANCE TAB -->
+            <section id="resistance" class="tab-content">
+                <div class="card">
+                    <h2>🎨 Resistance Color Code Tracker</h2>
+                    <div class="radio-group">
+                        <label><input type="radio" name="bandCount" value="3" checked="" /> 3-Band</label>
+                        <label><input type="radio" name="bandCount" value="4" /> 4-Band (with Tolerance)</label>
+                    </div>
+                    <div class="resistance-box">
+                        <div class="color-select"><label>Band 1</label><select id="band1"></select></div>
+                        <div class="color-select"><label>Band 2</label><select id="band2"></select></div>
+                        <div class="color-select"><label>Band 3</label><select id="band3"></select></div>
+                        <div class="color-select" id="tolRow" style="display:none;"><label>Band 4 (Tolerance)</label>
+                            <select id="band4"><option value="1">Brown ±1%</option><option value="2">Red ±2%</option><option value="5" selected="">Gold ±5%</option><option value="10">Silver ±10%</option></select>
+                        </div>
+                    </div>
+                    <div class="resistance-result">
+                        <div class="res-value" id="resDisplay">0 Ω</div>
+                        <div class="res-tolerance" id="resTol"></div>
+                        <div class="band-preview"><div class="band c1"></div><div class="band c2"></div><div class="band c3"></div></div>
+                    </div>
+                    <div class="controls" style="justify-content: center; margin-top: 15px;">
+                        <button class="scan-btn" onclick="openScanner('resistor')">📷 Scan Resistor</button>
+                    </div>
+                    <div id="resOcrStatus" class="ocr-status"></div>
+                </div>
+            </section>
+
+            <!-- SMD & CAPACITOR TABS -->
+            <section id="smd" class="tab-content">
+                <div class="card">
+                    <h2>📏 SMD Resistor Code Decoder</h2>
+                    <p>Enter or scan SMD marking codes (e.g., 103, 4R7, R10)</p>
+                    <div class="decoder-box">
+                        <div class="search-box">
+                            <input type="text" id="smdInput" list="smdCodes" placeholder="e.g., 103, 4R7, 1002" />
+                            <datalist id="smdCodes">
+                                <option value="100"></option><option value="101"></option><option value="102"></option><option value="103"></option><option value="104">
+                                </option><option value="472"></option><option value="473"></option><option value="1002"></option><option value="4R7"></option><option value="R10">
+                            </option></datalist>
+                            <button id="smdDecode">Decode</button>
+                            <button class="scan-btn" onclick="openScanner('smd')">📷 Scan</button>
+                        </div>
+                        <div class="result-panel" id="smdResult"><p style="color:var(--text-light); text-align:center;">Enter a code to decode</p></div>
+                    </div>
+                    <div id="smdOcrStatus" class="ocr-status"></div>
+                </div>
+            </section>
+
+            <section id="capacitor" class="tab-content">
+                <div class="card">
+                    <h2>💧 Non-Polar Capacitor Code Decoder</h2>
+                    <p>Decode ceramic capacitor markings (e.g., 104, 225K)</p>
+                    <div class="decoder-box">
+                        <div class="search-box">
+                            <input type="text" id="capInput" list="capCodes" placeholder="e.g., 104, 225, 103K" />
+                            <datalist id="capCodes">
+                                <option value="102"></option><option value="103"></option><option value="104"></option><option value="105"></option><option value="225"></option><option value="475"></option><option value="104K"></option><option value="225M">
+                            </option></datalist>
+                            <button id="capDecode">Decode</button>
+                            <button class="scan-btn" onclick="openScanner('capacitor')">📷 Scan</button>
+                        </div>
+                        <div class="result-panel" id="capResult"><p style="color:var(--text-light); text-align:center;">Enter a code to decode</p></div>
+                    </div>
+                    <div id="capOcrStatus" class="ocr-status"></div>
+                </div>
+            </section>
+
+            <!-- ELECTRICITY CALCULATOR TAB -->
+            <section id="electricity" class="tab-content">
+                <div class="card">
+                    <h2>🔌 Add Appliance</h2>
+                    <form id="elecForm">
+                        <div class="elec-form-grid">
+                            <div class="elec-field"><label>Appliance Name</label><input type="text" id="elecName" required="" placeholder="e.g., LED Bulb" /></div>
+                            <div class="elec-field"><label>Power (Watts)</label><input type="number" id="elecWatts" required="" min="1" placeholder="e.g., 10" /></div>
+                            <div class="elec-field"><label>Quantity</label><input type="number" id="elecQty" required="" min="1" value="1" /></div>
+                            <div class="elec-field"><label>Hours / Day</label><input type="number" id="elecHours" required="" min="0" max="24" step="0.5" placeholder="e.g., 8" /></div>
+                            <div class="elec-field"><label>Days / Month</label><input type="number" id="elecDays" required="" min="0" max="31" value="30" /></div>
+                        </div>
+                        <button type="submit" id="elecAddBtn">➕ Add Appliance</button>
+                        <button type="button" id="elecCancelEdit" class="secondary" style="display:none; margin-left: 10px;">Cancel Edit</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>📊 Consumption Table</h2>
+                    <div class="table-wrapper">
+                        <table id="elecTable">
+                            <thead>
+                                <tr>
+                                    <th>Appliance</th><th>Watts</th><th>Qty</th><th>Hours/Day</th><th>Days/Month</th>
+                                    <th>Total Watts/Day</th><th>kWh/Month</th><th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="elecTableBody">
+                                <tr><td colspan="8" class="no-data">No appliances added yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>💰 Electricity Cost Estimator</h2>
+                    <div class="cost-input-wrap">
+                        <label>Cost per Unit (₹ / kWh):</label>
+                        <input type="number" id="elecCostPerUnit" value="8" min="0" step="0.1" style="max-width: 150px;" />
+                    </div>
+                    <div class="elec-summary-grid">
+                        <div class="elec-summary-card"><h4>Total Daily (W·h)</h4><span id="elecSumDaily">0 W·h</span></div>
+                        <div class="elec-summary-card"><h4>Monthly (kWh)</h4><span id="elecSumMonth">0 kWh</span></div>
+                        <div class="elec-summary-card"><h4>Yearly (kWh)</h4><span id="elecSumYear">0 kWh</span></div>
+                        <div class="elec-summary-card"><h4>Monthly Bill</h4><span id="elecMonthCost">₹0</span></div>
+                        <div class="elec-summary-card"><h4>Yearly Bill</h4><span id="elecYearCost">₹0</span></div>
+                    </div>
+                    <div class="controls">
+                        <button class="secondary" onclick="elecResetAll()">🗑️ Reset All</button>
+                        <button class="secondary" onclick="elecExportCSV()">📥 Export CSV</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scanner Modal -->
+    <div id="scannerModal" class="scanner-modal">
+        <div class="scanner-container">
+            <div class="scanner-header">
+                <h3 id="scannerTitle">📷 Component Scanner</h3>
+                <button class="close-scanner" onclick="closeScanner()">×</button>
+            </div>
+            <div class="scan-mode-selector">
+                <label><input type="radio" name="scanMode" value="barcode" checked="" onchange="switchScanMode('barcode')" /><span>Barcode/QR</span></label>
+                <label><input type="radio" name="scanMode" value="ocr" onchange="switchScanMode('ocr')" /><span>Text/Numbers (OCR)</span></label>
+            </div>
+            <div id="reader"></div>
+            <div class="scanner-controls">
+                <button onclick="stopScanner()" class="secondary">Stop Camera</button>
+                <button onclick="closeScanner()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+<script src="script.js"></script></body></html>

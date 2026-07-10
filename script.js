@@ -1,10 +1,21 @@
-// ================= THEME & GLOBAL UTILS =================
-        const themeBtn = document.getElementById('themeToggle');
-        themeBtn.addEventListener('click', () => {
-            const isDark = document.body.getAttribute('data-theme') === 'dark';
-            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            themeBtn.querySelector('.icon').textContent = isDark ? '🌙' : '☀️';
-        });
+// ================= FULLSCREEN & GLOBAL UTILS =================
+        const fsBtn = document.getElementById('fsToggle');
+        if(fsBtn) {
+            fsBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+                    });
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            });
+            document.addEventListener('fullscreenchange', () => {
+                fsBtn.querySelector('.icon').textContent = document.fullscreenElement ? '✖' : '⛶';
+            });
+        }
 
         let dbData = [], filteredData = [], debounceTimer = null;
         let html5QrcodeScanner = null;

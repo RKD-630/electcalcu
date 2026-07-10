@@ -129,7 +129,7 @@
             const is4=document.querySelector('input[name="bandCount"]:checked').value==='4';
             document.getElementById('tolRow').style.display=is4?'flex':'none';
             const val=((b1*10)+b2)*mult;
-            document.getElementById('resDisplay').textContent=(val>=1e6?val/1e6+'MΩ':val>=1e3?val/1e3+'kΩ':val+'Ω');
+            document.getElementById('resDisplay').textContent=(val>=1e6?+(val/1e6).toFixed(2)+'MΩ':val>=1e3?+(val/1e3).toFixed(2)+'kΩ':+(val).toFixed(2)+'Ω');
             document.getElementById('resTol').textContent=is4?`±${document.getElementById('band4').value}%`:'';
             document.querySelector('.c1').style.backgroundColor=cMap.find(c=>c.v===b1).h;
             document.querySelector('.c2').style.backgroundColor=cMap.find(c=>c.v===b2).h;
@@ -150,7 +150,7 @@
             else if(/^\d{3}$/.test(c)){val=parseInt(c.substring(0,2))*Math.pow(10,+c[2]);sys='3-Digit';info=`${c.substring(0,2)}×10^${c[2]}=${val}Ω`;}
             else if(/^\d{4}$/.test(c)){val=parseInt(c.substring(0,3))*Math.pow(10,+c[3]);sys='4-Digit';info=`${c.substring(0,3)}×10^${c[3]}=${val}Ω`;}
             else{res.innerHTML='<p style="color:var(--error);">Invalid format. Use 3/4 digits or R notation.</p>';return;}
-            const fv=val>=1e6?(val/1e6)+'MΩ':val>=1e3?(val/1e3)+'kΩ':val+'Ω';
+            const fv=val>=1e6?+(val/1e6).toFixed(2)+'MΩ':val>=1e3?+(val/1e3).toFixed(2)+'kΩ':+(val).toFixed(2)+'Ω';
             res.innerHTML=`<div class="result-grid"><div class="result-item"><h4>Value</h4><span>${fv}</span></div><div class="result-item"><h4>System</h4><span>${sys}</span></div></div><div class="info-badge">💡 ${info}</div>`;
         }
         document.getElementById('smdDecode').addEventListener('click',decodeSMD);
@@ -169,8 +169,8 @@
             }
             const nf=pf/1000, uf=nf/1000;
             const tMap={J:'±5%',K:'±10%',M:'±20%',Z:'+80/-20%','':'Standard'};
-            const unit=pf<1000?pf+' pF':nf<1?nf.toFixed(2)+' nF':nf+' nF';
-            res.innerHTML=`<div class="result-grid"><div class="result-item"><h4>Capacitance</h4><span>${unit}${uf>=0.001?` (${uf.toFixed(2)} µF)`:''}</span></div><div class="result-item"><h4>Tolerance</h4><span>${tMap[m[2] || '']}</span></div></div><div class="info-badge">💡 ${pf} pF total</div>`;
+            const unit=pf<1000?+(pf).toFixed(2)+' pF':nf<1?+(nf).toFixed(2)+' nF':+(nf).toFixed(2)+' nF';
+            res.innerHTML=`<div class="result-grid"><div class="result-item"><h4>Capacitance</h4><span>${unit}${uf>=0.001?` (${+(uf).toFixed(2)} µF)`:''}</span></div><div class="result-item"><h4>Tolerance</h4><span>${tMap[m[2] || '']}</span></div></div><div class="info-badge">💡 ${+(pf).toFixed(2)} pF total</div>`;
         }
         document.getElementById('capDecode').addEventListener('click',decodeCap);
         document.getElementById('capInput').addEventListener('keypress',e=>e.key==='Enter'&&decodeCap());
@@ -215,7 +215,7 @@
                 const mk = (dw * a.days) / 1000;
                 h += `<tr>
                     <td>${a.name}</td><td>${a.watts}</td><td>${a.qty}</td><td>${a.hours}</td><td>${a.days}</td>
-                    <td>${dw.toLocaleString()} W·h</td><td>${mk.toFixed(2)} kWh</td>
+                    <td>${+(dw).toFixed(2)} W·h</td><td>${+(mk).toFixed(2)} kWh</td>
                     <td><button class="secondary" style="padding:6px 10px;font-size:0.8rem;" onclick="elecEdit(${i})">✏️</button> 
                         <button class="delete-btn" onclick="elecRemove(${i})">🗑️</button></td>
                 </tr>`;
@@ -230,11 +230,11 @@
             });
             const yk = mkTotal*12;
             const cost = +document.getElementById('elecCostPerUnit').value || 0;
-            document.getElementById('elecSumDaily').textContent = `${dwTotal.toLocaleString()} W·h`;
-            document.getElementById('elecSumMonth').textContent = `${mkTotal.toFixed(2)} kWh`;
-            document.getElementById('elecSumYear').textContent = `${yk.toFixed(2)} kWh`;
-            document.getElementById('elecMonthCost').textContent = `₹${(mkTotal*cost).toFixed(2)}`;
-            document.getElementById('elecYearCost').textContent = `₹${(yk*cost).toFixed(2)}`;
+            document.getElementById('elecSumDaily').textContent = `${+(dwTotal).toFixed(2)} W·h`;
+            document.getElementById('elecSumMonth').textContent = `${+(mkTotal).toFixed(2)} kWh`;
+            document.getElementById('elecSumYear').textContent = `${+(yk).toFixed(2)} kWh`;
+            document.getElementById('elecMonthCost').textContent = `₹${+(mkTotal*cost).toFixed(2)}`;
+            document.getElementById('elecYearCost').textContent = `₹${+(yk*cost).toFixed(2)}`;
         }
 
         function elecRemove(i) {
@@ -277,11 +277,11 @@
             let tDW=0, tMK=0;
             elecApps.forEach(a => {
                 const d=a.watts*a.qty*a.hours, k=(d*a.days)/1000; tDW+=d; tMK+=k;
-                csv+=`${a.name},${a.watts},${a.qty},${a.hours},${a.days},${d},${k.toFixed(2)}\n`;
+                csv+=`${a.name},${a.watts},${a.qty},${a.hours},${a.days},${+(d).toFixed(2)},${+(k).toFixed(2)}\n`;
             });
             const c=+document.getElementById('elecCostPerUnit').value||0;
-            csv+=`\nTOTALS,,,,,${tDW},${tMK.toFixed(2)}\n`;
-            csv+=`Cost per Unit (₹/kWh),${c}\nMonthly Bill,₹${(tMK*c).toFixed(2)}\nYearly Bill,₹${(tMK*12*c).toFixed(2)}\n`;
+            csv+=`\nTOTALS,,,,,${+(tDW).toFixed(2)},${+(tMK).toFixed(2)}\n`;
+            csv+=`Cost per Unit (₹/kWh),${+(c).toFixed(2)}\nMonthly Bill,₹${+(tMK*c).toFixed(2)}\nYearly Bill,₹${+(tMK*12*c).toFixed(2)}\n`;
             const blob=new Blob([csv],{type:'text/csv'}); const u=URL.createObjectURL(blob); const a=document.createElement('a');
             a.href=u; a.download='electricity_usage.csv'; a.click(); URL.revokeObjectURL(u);
         }

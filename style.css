@@ -17,8 +17,8 @@
             --shadow-md: 0 10px 30px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.5);
             --radius: 20px;
             --bg-gradient: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            --header-bg: rgba(255, 255, 255, 0.85);
-            --tab-bg: rgba(255, 255, 255, 0.4);
+            --header-bg: #0A1E33;
+            --tab-bg: #0A1E33;
             --header-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
@@ -35,14 +35,14 @@
             --highlight-text: #ffffff;
             --shadow-md: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05);
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --header-bg: #00FF6E;
-            --tab-bg: #00FF6E;
+            --header-bg: #0A1E33;
+            --tab-bg: #0A1E33;
             --header-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         [data-theme="dark"] * {
             color: blue !important;
-            text-shadow: 2px 2px 4px black !important;
+            text-shadow: 2px 2px 4px yellow !important;
         }
 
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
@@ -70,12 +70,12 @@
         .header-content {
             max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
         }
-        .title-area h1 { font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 2px; letter-spacing: -0.5px; }
-        .title-area p { color: var(--primary); font-size: 0.95rem; font-weight: 500; }
+        .title-area h1 { font-size: 1.8rem; font-weight: 800; color: white !important; margin-bottom: 2px; letter-spacing: -0.5px; }
+        .title-area p { color: white !important; font-size: 0.95rem; font-weight: 500; }
         
         .theme-btn {
             background: rgba(255,255,255,0.2); border: 1px solid var(--border);
-            color: var(--text); width: 44px; height: 44px; border-radius: 12px;
+            color: white !important; width: 44px; height: 44px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center; cursor: pointer;
             font-size: 1.2rem; transition: all 0.3s; padding: 0; box-shadow: var(--shadow-sm);
         }
@@ -93,17 +93,17 @@
         .tabs::-webkit-scrollbar { display: none; }
         .tab-btn {
             padding: 12px 24px; background: transparent; border: none; cursor: pointer;
-            font-size: 1rem; font-weight: 600; color: #475569; 
+            font-size: 1rem; font-weight: 600; color: white !important; 
             border-radius: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
         }
         .tab-btn .icon { margin-right: 8px; font-size: 1.2rem; }
         .tab-btn .m-text { display: none; }
         .tab-btn.active { 
-            background: rgba(255,255,255,0.9); color: var(--primary); 
+            background: rgba(255,255,255,0.9); color: var(--primary) !important; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); transform: translateY(-1px);
         }
-        .tab-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.6); }
+        .tab-btn:hover:not(.active) { color: white !important; background: rgba(255,255,255,0.2); }
 
         .tab-content { display: none; animation: slideUp 0.4s ease forwards; opacity: 0; transform: translateY(15px); }
         .tab-content.active { display: block; }
@@ -292,14 +292,14 @@
                 border-bottom: none !important;
                 background: transparent !important;
                 box-shadow: none !important;
-                color: var(--text-light);
+                color: white !important;
                 flex: 1;
             }
             .tab-btn .icon { margin-right: 0; margin-bottom: 6px; font-size: 1.4rem; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
             .tab-btn .d-text { display: none; }
             .tab-btn .m-text { display: block; font-weight: 600; white-space: nowrap; font-size: 0.65rem; letter-spacing: 0.2px; }
-            .tab-btn.active { color: var(--primary); }
-            .tab-btn.active .icon { transform: translateY(-4px) scale(1.15); color: var(--primary); }
+            .tab-btn.active { color: white !important; }
+            .tab-btn.active .icon { transform: translateY(-4px) scale(1.15); color: white !important; }
         }
         @media (max-width: 400px) {
             .tab-btn .m-text { font-size: 0.6rem; letter-spacing: 0; }

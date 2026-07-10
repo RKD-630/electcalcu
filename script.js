@@ -304,3 +304,58 @@
             const blob=new Blob([csv],{type:'text/csv'}); const u=URL.createObjectURL(blob); const a=document.createElement('a');
             a.href=u; a.download='electricity_usage.csv'; a.click(); URL.revokeObjectURL(u);
         }
+
+        // ================= W/Ve+/A CALCULATOR =================
+        function calculateWVA() {
+            const wInput = document.getElementById('calcW');
+            const vInput = document.getElementById('calcV');
+            const aInput = document.getElementById('calcA');
+            const res = document.getElementById('wvaResult');
+            
+            let w = parseFloat(wInput.value);
+            let v = parseFloat(vInput.value);
+            let a = parseFloat(aInput.value);
+            
+            let filled = 0;
+            if(!isNaN(w)) filled++;
+            if(!isNaN(v)) filled++;
+            if(!isNaN(a)) filled++;
+            
+            if(filled < 2) {
+                res.innerHTML = '<span style="color:var(--error);">Please enter exactly two values.</span>';
+                res.style.display = 'flex';
+                return;
+            }
+            if(filled === 3) {
+                res.innerHTML = '<span style="color:var(--error);">Please leave one field empty to calculate.</span>';
+                res.style.display = 'flex';
+                return;
+            }
+            
+            let resultText = '';
+            if(isNaN(w)) {
+                w = v * a;
+                wInput.value = +(w).toFixed(2);
+                resultText = `Calculated Power: ${+(w).toFixed(2)} Watts`;
+            } else if(isNaN(v)) {
+                if(a === 0) { res.innerHTML = '<span style="color:var(--error);">Amperes cannot be zero.</span>'; res.style.display = 'flex'; return; }
+                v = w / a;
+                vInput.value = +(v).toFixed(2);
+                resultText = `Calculated Voltage: ${+(v).toFixed(2)} Volts`;
+            } else if(isNaN(a)) {
+                if(v === 0) { res.innerHTML = '<span style="color:var(--error);">Volts cannot be zero.</span>'; res.style.display = 'flex'; return; }
+                a = w / v;
+                aInput.value = +(a).toFixed(2);
+                resultText = `Calculated Current: ${+(a).toFixed(2)} Amperes`;
+            }
+            
+            res.innerHTML = `<span>${resultText}</span>`;
+            res.style.display = 'flex';
+        }
+        
+        function clearWVA() {
+            document.getElementById('calcW').value = '';
+            document.getElementById('calcV').value = '';
+            document.getElementById('calcA').value = '';
+            document.getElementById('wvaResult').style.display = 'none';
+        }

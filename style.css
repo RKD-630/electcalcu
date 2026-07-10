@@ -195,7 +195,7 @@
         .resistance-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 20px; }
         .color-select { display: flex; flex-direction: column; gap: 8px; }
         .color-select label { font-weight: 600; font-size: 0.9rem; color: var(--text-light); }
-        .resistance-result { grid-column: 1 / -1; text-align: center; padding: 30px; background: linear-gradient(to right, #f8fafc, #f1f5f9); border-radius: 12px; border: 1px solid var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .resistance-result { grid-column: 1 / -1; text-align: center; padding: 30px; background: linear-gradient(to right, rgba(248,250,252,0.85), rgba(241,245,249,0.85)), url('resistor-bg.png') center/cover; border-radius: 12px; border: 1px solid var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
         .res-value { font-size: 2.5rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
         .res-tolerance { font-size: 1.2rem; color: var(--text-light); margin-top: 4px; font-weight: 500; }
         .band-preview { display: flex; justify-content: center; gap: 6px; margin-top: 15px; background: #fff; padding: 10px; border-radius: 8px; width: fit-content; margin-left: auto; margin-right: auto; border: 1px solid #e2e8f0; }
@@ -204,6 +204,8 @@
         /* Decoder Tabs */
         .decoder-box { max-width: 600px; margin: 0 auto; }
         .result-panel { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); padding: 24px; border-radius: 16px; border: 1px solid var(--border); margin-top: 20px; min-height: 140px; display: flex; flex-direction: column; justify-content: center; box-shadow: var(--shadow-sm); }
+        #smdResult { background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(248,250,252,0.85) 100%), url('smd-bg.png') center/cover; }
+        #capResult { background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(248,250,252,0.85) 100%), url('capacitor-bg.png') center/cover; }
         .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
         .result-item { background: white; padding: 16px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
         .result-item h4 { font-size: 0.85rem; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }

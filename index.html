@@ -154,9 +154,9 @@
                         <button type="submit" id="elecAddBtn">➕ Add Appliance</button>
                         <button type="button" id="elecCancelEdit" class="secondary" style="display:none; margin-left: 10px;">Cancel Edit</button>
                     </form>
-                </div>
+                    
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 30px 0;" />
 
-                <div class="card">
                     <h2>📊 Consumption Table</h2>
                     <div class="table-wrapper">
                         <table id="elecTable">
@@ -171,9 +171,8 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                <div class="card">
+                    
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 30px 0;" />
                     <h2>💰 Electricity Cost Estimator</h2>
                     <div class="cost-input-wrap">
                         <label>Cost per Unit (₹ / kWh):</label>
@@ -189,6 +188,32 @@
                     <div class="controls">
                         <button class="secondary" onclick="elecResetAll()">🗑️ Reset All</button>
                         <button class="secondary" onclick="elecExportCSV()">📥 Export CSV</button>
+                    </div>
+                </div>
+
+                <!-- W/Ve+/A CALCULATOR -->
+                <div class="card" id="ohmslaw">
+                    <h2>⚡ W/Ve+/A Calculator</h2>
+                    <p>Enter any two values to calculate the third automatically.</p>
+                    <div class="elec-form-grid">
+                        <div class="elec-field">
+                            <label>Watts (W)</label>
+                            <input type="number" id="calcW" placeholder="e.g. 100" />
+                        </div>
+                        <div class="elec-field">
+                            <label>Volts (Ve+)</label>
+                            <input type="number" id="calcV" placeholder="e.g. 12" />
+                        </div>
+                        <div class="elec-field">
+                            <label>Amperes (A)</label>
+                            <input type="number" id="calcA" placeholder="e.g. 8.3" />
+                        </div>
+                    </div>
+                    <div class="controls" style="margin-top: 15px;">
+                        <button onclick="calculateWVA()">Calculate</button>
+                        <button class="secondary" onclick="clearWVA()">Clear</button>
+                    </div>
+                    <div id="wvaResult" class="result-panel" style="display:none; text-align:center; min-height:80px; margin-top:20px; font-size:1.2rem; font-weight:700; color:var(--primary);">
                     </div>
                 </div>
             </section>

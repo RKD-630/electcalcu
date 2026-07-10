@@ -122,8 +122,16 @@
 
         // ================= RESISTANCE & DECODERS =================
         const cMap=[{n:'Black',v:0,m:1,h:'#000'},{n:'Brown',v:1,m:10,h:'#8B4513'},{n:'Red',v:2,m:100,h:'#F00'},{n:'Orange',v:3,m:1e3,h:'#FFA500'},{n:'Yellow',v:4,m:1e4,h:'#FF0'},{n:'Green',v:5,m:1e5,h:'#080'},{n:'Blue',v:6,m:1e6,h:'#00F'},{n:'Violet',v:7,m:1e7,h:'#8A2BE2'},{n:'Grey',v:8,m:1e8,h:'#808080'},{n:'White',v:9,m:1e9,h:'#FFF'}];
-        ['band1','band2'].forEach(id=>{const el=document.getElementById(id);cMap.forEach(c=>el.add(new Option(c.n,c.v)));});
-        document.getElementById('band3').innerHTML='<option value="1">Black ×1</option><option value="10">Brown ×10</option><option value="100">Red ×100</option><option value="1000">Orange ×1k</option><option value="10000">Yellow ×10k</option><option value="100000">Green ×100k</option><option value="1000000">Blue ×1M</option><option value="10000000">Violet ×10M</option>';
+        ['band1','band2'].forEach(id=>{
+            const el=document.getElementById(id);
+            cMap.forEach(c=>{
+                let opt = new Option(c.n,c.v);
+                opt.style.backgroundColor = c.h;
+                opt.style.color = ['#000','#8B4513','#F00','#080','#00F','#8A2BE2','#808080'].includes(c.h) ? '#FFF' : '#000';
+                el.add(opt);
+            });
+        });
+        document.getElementById('band3').innerHTML='<option value="1" style="background:#000;color:#FFF">Black ×1</option><option value="10" style="background:#8B4513;color:#FFF">Brown ×10</option><option value="100" style="background:#F00;color:#FFF">Red ×100</option><option value="1000" style="background:#FFA500;color:#000">Orange ×1k</option><option value="10000" style="background:#FF0;color:#000">Yellow ×10k</option><option value="100000" style="background:#080;color:#FFF">Green ×100k</option><option value="1000000" style="background:#00F;color:#FFF">Blue ×1M</option><option value="10000000" style="background:#8A2BE2;color:#FFF">Violet ×10M</option>';
         function updateRes(){
             const b1=+document.getElementById('band1').value,b2=+document.getElementById('band2').value,mult=+document.getElementById('band3').value;
             const is4=document.querySelector('input[name="bandCount"]:checked').value==='4';

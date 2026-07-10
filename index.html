@@ -84,7 +84,7 @@
                         <div class="color-select"><label>Band 2</label><select id="band2"></select></div>
                         <div class="color-select"><label>Band 3</label><select id="band3"></select></div>
                         <div class="color-select" id="tolRow" style="display:none;"><label>Band 4 (Tolerance)</label>
-                            <select id="band4"><option value="1">Brown ±1%</option><option value="2">Red ±2%</option><option value="5" selected="">Gold ±5%</option><option value="10">Silver ±10%</option></select>
+                            <select id="band4"><option value="1" style="background:#8B4513;color:#FFF">Brown ±1%</option><option value="2" style="background:#F00;color:#FFF">Red ±2%</option><option value="5" selected="" style="background:#FFD700;color:#000">Gold ±5%</option><option value="10" style="background:#C0C0C0;color:#000">Silver ±10%</option></select>
                         </div>
                     </div>
                     <div class="resistance-result">
@@ -177,7 +177,7 @@
                     <h2>💰 Electricity Cost Estimator</h2>
                     <div class="cost-input-wrap">
                         <label>Cost per Unit (₹ / kWh):</label>
-                        <input type="number" id="elecCostPerUnit" value="8" min="0" step="0.1" style="max-width: 150px;" />
+                        <input type="number" id="elecCostPerUnit" value="8" min="0" step="0.01" style="max-width: 150px;" oninput="if(this.value.length > 5) this.value = this.value.slice(0, 5);" />
                     </div>
                     <div class="elec-summary-grid">
                         <div class="elec-summary-card"><h4>Total Daily (W·h)</h4><span id="elecSumDaily">0 W·h</span></div>
